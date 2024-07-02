@@ -46,13 +46,13 @@ const getDayAll = (starDay, endDay) => {
   const rangeDate2 = getDayAll('2021-01-01','2021-12-31')
   const rangeDate3 = getDayAll('2022-01-01','2022-12-31')
   let crosswordDateArr = []
-  let dayCount = 0
+  let dayCnt = 0
 async function findDate(rangeDate,year) {
 
       let data = await rangeDate.filter(function(item){
         url = "https://bjrbdzb.bjd.com.cn/bjwb/mobile/" + year + "/" + item + "/" + item + "_m.html"
 
-        let res = axios.get(url).then(res => {
+        let dataRes = axios.get(url).then(res => {
             const $ = cheerio.load(res.data)
             const picList = $("#picList")
     
@@ -71,21 +71,23 @@ async function findDate(rangeDate,year) {
                     return false; // 如果找到符合条件的元素，可以终止循环
                 }
             });
-            console.log("length of count, liEle",item, count, liElements.length);
-
+            // console.log("length of count, liEle",item, count, liElements.length);
             if(count < liElements.length){
-              // console.log("item", item);
-              dayCount = dayCount + 1
+              dayCnt = dayCnt + 1
+              // console.log("item",dayCnt, item, count, liElements.length);
               return item
             }
           })
-        return res;
+          dataRes.then(res=>{
+            if(res != undefined){
+              crosswordDateArr.push(res)
+            }
+          console.log("cr",crosswordDateArr.sort());
+
+          })
       })
-      console.log("dayCount", dayCount);
-      crosswordDateArr.push(data)
-      // crosswordDateArr[0].forEach(e=>console.log(e))
     }
 
- findDate(rangeDate1, 2020)
+//  findDate(rangeDate1, 2020)
  findDate(rangeDate2, 2021)
- findDate(rangeDate3, 2022)
+//  findDate(rangeDate3, 2022)
