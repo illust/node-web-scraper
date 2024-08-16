@@ -43,7 +43,7 @@ const getDayAll = (starDay, endDay) => {
   };
 
   const rangeDate1 = getDayAll('2020-07-14','2020-12-31')
-  const rangeDate2 = getDayAll('2021-01-01','2021-12-31')
+  const rangeDate2 = getDayAll('2021-01-01','2021-05-31')
   const rangeDate3 = getDayAll('2022-01-01','2022-12-31')
   let crosswordDateArr = []
   let dayCnt = 0
@@ -65,29 +65,30 @@ async function findDate(rangeDate,year) {
 
                 // 在当前li元素中查找class为"img-title"的span元素
                 let imgTitleSpan = $(this).find(".img-title");
-                
                 // 检查是否存在这样的span元素，并且其文本内容为"五色土·胡同"
                 if (imgTitleSpan.length > 0 && imgTitleSpan.text().includes("五色土·胡同")) {
+                  // console.log("imgTitleSpan.text()",item, imgTitleSpan.text(),liElements.length,count);
                     return false; // 如果找到符合条件的元素，可以终止循环
                 }
             });
             // console.log("length of count, liEle",item, count, liElements.length);
             if(count < liElements.length){
-              dayCnt = dayCnt + 1
-              // console.log("item",dayCnt, item, count, liElements.length);
+              // console.log("item", item, count, liElements.length);
+              crosswordDateArr.push(item)
+          console.log("cr",crosswordDateArr.sort());
+
               return item
             }
           })
-          dataRes.then(res=>{
-            if(res != undefined){
-              crosswordDateArr.push(res)
-            }
-          console.log("cr",crosswordDateArr.sort());
+          // dataRes.then(res=>{
+          //   if(res != undefined){
+          //     crosswordDateArr.push(res)
+          //   }
 
-          })
+          // })
       })
     }
 
-//  findDate(rangeDate1, 2020)
- findDate(rangeDate2, 2021)
+ findDate(rangeDate1, 2020)
+//  findDate(rangeDate2, 2021)
 //  findDate(rangeDate3, 2022)
